@@ -37,13 +37,26 @@ type resolve = (
 
 const extensions = ['.js', '.json', '.ts', '.tsx', '.jsx'] as const;
 
+const mappedExtensions = {
+	'.js': ['.ts'],
+	'.cjs': ['.cts'],
+	'.mjs': ['.mts'],
+} as const;
+
 async function tryExtensions(
 	specifier: string,
 	context: Context,
 	defaultResolve: resolve,
 ) {
 	let error;
-	for (const extension of extensions) {
+	const extension = path.extname(specifier);
+	let extensionsToTry = mappedExtensions[extension];
+	if (extensionsToTry) {
+		specifier = specifier.slice(0, -extension.length);
+	} else {
+		extensionsToTry = extensions;
+	}
+	for (const extension of extensionsToTry) {
 		try {
 			return await resolve(
 				specifier + extension,
