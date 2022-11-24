@@ -132,6 +132,8 @@ export const resolve: resolve = async function (
 	// https://nodejs.org/api/esm.html#esm_node_imports
 	if (!supportsNodePrefix && specifier.startsWith('node:')) {
 		specifier = specifier.slice(5);
+	} else if (path.isAbsolute(specifier)) {
+		specifier = pathToFileURL(specifier).href;
 	}
 
 	// If directory, can be index.js, index.ts, etc.
