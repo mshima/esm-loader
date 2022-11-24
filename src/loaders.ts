@@ -135,6 +135,8 @@ export const resolve: resolve = async function (
 	} else if (path.isAbsolute(specifier)) {
 		specifier = pathToFileURL(specifier).href;
 	}
+	console.log('@@@@');
+	console.log(specifier);
 
 	// If directory, can be index.js, index.ts, etc.
 	if (specifier.endsWith('/')) {
@@ -186,7 +188,9 @@ export const resolve: resolve = async function (
 
 	let resolved: Resolved;
 	try {
+		console.log(specifier);
 		resolved = await defaultResolve(specifier, context, defaultResolve);
+		console.log(resolved);
 	} catch (error) {
 		if (
 			error instanceof Error
