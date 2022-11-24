@@ -29,7 +29,8 @@
 		"lint": "eslint .",
 		"type-check": "tsc --noEmit",
 		"test": "pnpm build && node --loader @esbuild-kit/esm-loader tests",
-		"prepack": "pnpm build && clean-pkg-json"
+		"prepack": "pnpm build && clean-pkg-json",
+		"prepare": "npm run build"
 	},
 	"dependencies": {
 		"@esbuild-kit/core-utils": "^3.0.0",
